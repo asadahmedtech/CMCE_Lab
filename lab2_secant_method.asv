@@ -1,0 +1,61 @@
+function out = lab2_secant_method()
+    %Global Equation ax^2 + bx + c
+    global a b c;
+    % a = 1;
+    % b = 0;
+    % c = -1;
+    a = input('Enter A in Ax^2 + Bx + C ');
+    b = input('Enter B in Ax^2 + Bx + C ');
+    c = input('Enter C in Ax^2 + Bx + C ');
+    
+    discrinmate = solve_disc();
+    
+    if(discrinmate > 0)
+        root = solve_secant(2, 6);
+        fprintf('Real Roots and values are \n Root 1 : %i \n', root);
+        root = solve_secant(2, -5);
+        fprintf('Real Roots and values are \n Root 2 : %i \n', root);
+    elseif(discrinmate == 0)
+        root = solve_secant(2, 6);
+        fprintf('Real Roots and equal is \n Root  : %i \n', root);
+    else
+        fprintf('Imaginary Roots present \n');
+    end
+end
+
+function y = f(x)
+    %Equation
+    % syms x; System Toolbox unavailable
+    global a b c;
+    y = a * x^2 + b * x + c;
+end
+
+function y = f_diff(x)
+    %Differentiated equation
+    global a b;
+    y = 2*a*x + b;
+    % y = diff(f(x)); With the availablity of SYMS this will work 
+end
+function d = solve_disc()
+    global a b c;
+    d = sqrt(b*b - 4*a*c);
+end
+
+function root = solve_secant(point_A, point_B)
+    threshold = 0.01;
+    if(abs(point_A - point_B) <= threshold)
+        root = (point_A + point_B)/2;
+    else
+        mid = (point_A + point_B)/2;
+        if(f(mid) > 0)
+            if(f(point_A) < 0)
+                root = solve_secant(point_A, mid);
+            else
+                root = solve_secant(point_A, mid);
+            
+        else
+            root = solve_secant(mid, point_B);
+        end
+    end
+end
+ 
