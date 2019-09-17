@@ -2,7 +2,11 @@ function out = lab5_integration()
 %     X = [0 5 10 15 20 25 30 35 40];
 %     Y = [0 6.67 17.33 42.67 37.33 30.1 29.31 28.74 27.12];
     
-    [X, Y] = generate_points(0, 3, 0.1);
+    a = 0.3;
+    b = 0.7;
+    h = 0.025;
+
+    [X, Y] = generate_points(a, b, h);
     area = solve_trapazoidal(X, Y);
     
     fprintf('The area of the points is %d using Trapazoidal Rule \n', area);
@@ -17,7 +21,10 @@ function out = lab5_integration()
 end
 
 function y = f(x)
-    y = sin(x);
+    a = 10;
+    y = (a*x)/(1+x*(a-1));
+    
+    y = 1/(y-x);
 end
 
 function [X, Y] = generate_points(a, b, h)
